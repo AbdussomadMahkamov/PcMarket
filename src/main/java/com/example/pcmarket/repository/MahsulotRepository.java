@@ -5,5 +5,6 @@ import com.example.pcmarket.entity.Mahsulot;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MahsulotRepository extends JpaRepository<Mahsulot, Integer> {
-    boolean existsByVideokartaAndEkranDioganalAndEkranOlchamAndProtsessorAndRamAndQattiqDiskAndSistemaAndCategoriya(String videokarta, String ekranDioganal, String ekranOlcham, String protsessor, String ram, String qattiqDisk, String sistema, Categoriya categoriya);
+    boolean existsByVideokartaAndEkranDioganalAndEkranOlchamAndProtsessorAndRamAndQattiqDiskAndSistemaAndCategoriyaAndNarxi(String videokarta, String ekranDioganal, String ekranOlcham, String protsessor, String ram, String qattiqDisk, String sistema, Categoriya categoriya, double narxi);
+    boolean existsByMatPlataAndSovutishTizimiAndVideokartaAndProtsessorAndRamAndQattiqDiskAndQuvvatManbaiAndSsdAndKeysAndSistemaAndNarxiAndCategoriya(String matPlata, String sovutishTizimi, String videokarta, String protsessor, String ram, String qattiqDisk, String quvvatManbai, String ssd, String keys, String sistema, double narxi, Categoriya categoriya);
 }
