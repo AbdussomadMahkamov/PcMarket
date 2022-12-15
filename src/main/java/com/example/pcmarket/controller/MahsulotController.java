@@ -169,4 +169,35 @@ public class MahsulotController {
         ApiResponse apiResponse=mahsulotService.editMonitor(id, dto);
         return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
     }
+//    Printer kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
+    @PreAuthorize(value = "hasAuthority('ADD')")
+    @PostMapping("/addPrinter")
+    public HttpEntity<?> AddPrinter(@RequestBody PrinterDto dto){
+        ApiResponse apiResponse=mahsulotService.addPrinter(dto);
+        return ResponseEntity.status(apiResponse.isHolat()? HttpStatus.OK:HttpStatus.ALREADY_REPORTED).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('READ')")
+    @GetMapping("/getPrinter")
+    public HttpEntity<?> GetPrinter(){
+        ApiResponse apiResponse=mahsulotService.getPrinter();
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('IDREAD')")
+    @GetMapping("/getIdPrinter/{id}")
+    public HttpEntity<?> GetIdPrinter(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.getIdPrinter(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('DELETE')")
+    @DeleteMapping("/deletePrinter/{id}")
+    public HttpEntity<?> DeletePrinter(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.deletePrinter(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('PUT')")
+    @PutMapping("/editPrinter/{id}")
+    public HttpEntity<?> EditPrinter(@PathVariable Integer id, @RequestBody PrinterDto dto){
+        ApiResponse apiResponse=mahsulotService.editPrinter(id, dto);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
 }

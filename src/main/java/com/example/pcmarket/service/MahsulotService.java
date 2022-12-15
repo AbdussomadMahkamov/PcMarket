@@ -563,4 +563,105 @@ public class MahsulotService {
         mahsulotRepository.save(mahsulot);
         return new ApiResponse("Ma'lumotlar tahrirlandi", true);
     }
+    //    Printer
+    public ApiResponse addPrinter(PrinterDto dto) {
+        Optional<Categoriya> byId = categoriyaRepository.findById(dto.getCategoriyaId());
+        if (!byId.isPresent()){
+            return new ApiResponse("Bazada bunday idli categoriya mavjud emas", false);
+        }
+        boolean b = mahsulotRepository.existsByBrendAndPechatRangiAndQurilmaFunksiyasiAndChopQilishTexnologiyasiAndMaxFormatAndDupleksChopetishAndUlanishAndNarxiAndCategoriya(dto.getBrend(), dto.getPechatRangi(), dto.getQurilmaFunksiyasi(), dto.getChopQilishTexnologiyasi(), dto.getMaxFormat(), dto.getChopQilishTexnologiyasi(), dto.getUlanish(), dto.getNarxi(), byId.get());
+        if (b){
+            return new ApiResponse("Bazada bunday ma'lumot oldin saqlangan", false);
+        }
+        Mahsulot mahsulot=new Mahsulot();
+        mahsulot.setBrend(dto.getBrend());
+        mahsulot.setPechatRangi(dto.getPechatRangi());
+        mahsulot.setQurilmaFunksiyasi(dto.getQurilmaFunksiyasi());
+        mahsulot.setChopQilishTexnologiyasi(dto.getChopQilishTexnologiyasi());
+        mahsulot.setMaxFormat(dto.getMaxFormat());
+        mahsulot.setDupleksChopetish(dto.getDupleksChopetish());
+        mahsulot.setUlanish(dto.getUlanish());
+        mahsulot.setNarxi(dto.getNarxi());
+        mahsulot.setCategoriya(byId.get());
+        mahsulotRepository.save(mahsulot);
+        return new ApiResponse("Ma'lumotlar bazaga saqlandi", true);
+    }
+
+    public ApiResponse getPrinter() {
+        String S="";
+        for (Mahsulot mahsulot : mahsulotRepository.findAll()) {
+            if (mahsulot.getCategoriya().getNomi().equals("Printer")){
+                S+="Categoiya: "+mahsulot.getCategoriya().getNomi()+"\n"+
+                        "Narxi: "+mahsulot.getNarxi()+"\n"+
+                        "Id: "+mahsulot.getId()+"\n"+
+                        "Brend: "+mahsulot.getBrend().toString()+"\n"+
+                        "Pechat rangi: "+mahsulot.getPechatRangi()+"\n"+
+                        "Qurilma funksiyasi: "+mahsulot.getQurilmaFunksiyasi()+"\n"+
+                        "Chop qilish texnologiyasi: "+mahsulot.getChopQilishTexnologiyasi()+"\n"+
+                        "Max format: "+mahsulot.getMaxFormat()+"\n"+
+                        "Dupleks chop etish: "+mahsulot.getDupleksChopetish()+"\n"+
+                        "Ulanish: "+mahsulot.getUlanish()+"\n\n";
+            }
+        }
+        return new ApiResponse(S, true);
+    }
+
+    public ApiResponse getIdPrinter(Integer id) {
+        String S="";
+        for (Mahsulot mahsulot : mahsulotRepository.findAll()) {
+            if (mahsulot.getId().equals(id)){
+                if (mahsulot.getCategoriya().getNomi().equals("Printer")){
+                    S="Categoiya: "+mahsulot.getCategoriya().getNomi()+"\n"+
+                            "Narxi: "+mahsulot.getNarxi()+"\n"+
+                            "Id: "+mahsulot.getId()+"\n"+
+                            "Brend: "+mahsulot.getBrend().toString()+"\n"+
+                            "Pechat rangi: "+mahsulot.getPechatRangi()+"\n"+
+                            "Qurilma funksiyasi: "+mahsulot.getQurilmaFunksiyasi()+"\n"+
+                            "Chop qilish texnologiyasi: "+mahsulot.getChopQilishTexnologiyasi()+"\n"+
+                            "Max format: "+mahsulot.getMaxFormat()+"\n"+
+                            "Dupleks chop etish: "+mahsulot.getDupleksChopetish()+"\n"+
+                            "Ulanish: "+mahsulot.getUlanish()+"\n\n";
+                }else {
+                    return new ApiResponse("Bunday idida printer ma'lumoti mavjud emas", false);
+                }
+                return new ApiResponse(S, true);
+            }
+        }
+        return new ApiResponse("Bunday idida ma'lumot mavjud emas", false);
+    }
+
+    public ApiResponse deletePrinter(Integer id) {
+        Optional<Mahsulot> byId = mahsulotRepository.findById(id);
+        if (!byId.isPresent()){
+            return new ApiResponse("Bazada bunday idli ma'lumot mavjud emas", false);
+        }
+        mahsulotRepository.deleteById(id);
+        return new ApiResponse("Ma'lumotlar o'chirildi", true);
+    }
+
+    public ApiResponse editPrinter(Integer id, PrinterDto dto) {
+        Optional<Mahsulot> byId = mahsulotRepository.findById(id);
+        if (!byId.isPresent()){
+            return new ApiResponse("Bazda bunday idli ma'lumot topilmadi", false);
+        }
+        Optional<Categoriya> byId1 = categoriyaRepository.findById(dto.getCategoriyaId());
+        if (!byId1.isPresent()){
+            return new ApiResponse("Bazda bunday idli categoriya mavjud emas!", false);
+        }
+        if (!byId.get().getCategoriya().getNomi().equals("Printer")){
+            return new ApiResponse("Bunday idida Printer ma'lumoti mavjud emas!", false);
+        }
+        Mahsulot mahsulot=byId.get();
+        mahsulot.setBrend(dto.getBrend());
+        mahsulot.setPechatRangi(dto.getPechatRangi());
+        mahsulot.setQurilmaFunksiyasi(dto.getQurilmaFunksiyasi());
+        mahsulot.setChopQilishTexnologiyasi(dto.getChopQilishTexnologiyasi());
+        mahsulot.setMaxFormat(dto.getMaxFormat());
+        mahsulot.setDupleksChopetish(dto.getDupleksChopetish());
+        mahsulot.setUlanish(dto.getUlanish());
+        mahsulot.setNarxi(dto.getNarxi());
+        mahsulot.setCategoriya(byId1.get());
+        mahsulotRepository.save(mahsulot);
+        return new ApiResponse("Ma'lumotlar tahrirlandi", true);
+    }
 }

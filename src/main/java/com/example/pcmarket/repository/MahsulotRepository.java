@@ -10,5 +10,5 @@ public interface MahsulotRepository extends JpaRepository<Mahsulot, Integer> {
     boolean existsByMatPlataAndSovutishTizimiAndProtsessorAndRamAndSsdAndQuvvatManbaiAndKeysAndSistemaAndNarxiAndCategoriya(String matPlata, String sovutishTizimi, String protsessor, String ram, String ssd, String quvvatManbai, String keys, String sistema, double narxi, Categoriya categoriya);
     boolean existsByVideokartaAndEkranDioganalAndEkranOlchamAndProtsessorAndRamAndQattiqDiskAndSsdAndSistemaAndNarxiAndCategoriya(String videokarta, String ekranDioganal, String ekranOlcham, String protsessor, String ram, String qattiqDisk, String ssd, String sistema, double narxi, Categoriya categoriya);
     boolean existsByBrendAndEkranDioganalAndEkranOlchamAndVideoUlagichAndMatritsaAndEkranQayrilishAndEkranChastotasiAndJavobVaqtiAndNarxiAndCategoriya(String brend, String ekranDioganal, String ekranOlcham, String videoUlagich, String matritsa, String ekranQayrilish, String ekranChastotasi, String javobVaqti, double narxi, Categoriya categoriya);
-
+    boolean existsByBrendAndPechatRangiAndQurilmaFunksiyasiAndChopQilishTexnologiyasiAndMaxFormatAndDupleksChopetishAndUlanishAndNarxiAndCategoriya(String brend, String pechatRangi, String qurilmaFunksiyasi, String chopQilishTexnologiyasi, String maxFormat, String dupleksChopetish, String ulanish, double narxi, Categoriya categoriya);
 }
