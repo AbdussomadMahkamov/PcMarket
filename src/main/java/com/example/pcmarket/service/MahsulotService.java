@@ -458,4 +458,109 @@ public class MahsulotService {
         mahsulotRepository.save(mahsulot);
         return new ApiResponse("Ma'lumotlar tahrirlandi", true);
     }
+    //    Monitor
+    public ApiResponse addMonitor(MonitorDto dto) {
+        Optional<Categoriya> byId = categoriyaRepository.findById(dto.getCategoriyaId());
+        if (!byId.isPresent()){
+            return new ApiResponse("Bazada bunday idli categoriya mavjud emas", false);
+        }
+        boolean b = mahsulotRepository.existsByBrendAndEkranDioganalAndEkranOlchamAndVideoUlagichAndMatritsaAndEkranQayrilishAndEkranChastotasiAndJavobVaqtiAndNarxiAndCategoriya(dto.getBrend(), dto.getEkranDioganal(), dto.getEkranOlcham(), dto.getVideoUlagich(), dto.getMatritsa(), dto.getEkranQayrilish(), dto.getEkranChastotasi(), dto.getJavobVaqti(), dto.getNarxi(), byId.get());
+        if (b){
+            return new ApiResponse("Bazada bunday ma'lumot oldin saqlangan", false);
+        }
+        Mahsulot mahsulot=new Mahsulot();
+        mahsulot.setBrend(dto.getBrend());
+        mahsulot.setEkranDioganal(dto.getEkranDioganal());
+        mahsulot.setEkranOlcham(dto.getEkranOlcham());
+        mahsulot.setVideoUlagich(dto.getVideoUlagich());
+        mahsulot.setMatritsa(dto.getMatritsa());
+        mahsulot.setEkranQayrilish(dto.getEkranQayrilish());
+        mahsulot.setEkranChastotasi(dto.getEkranChastotasi());
+        mahsulot.setJavobVaqti(dto.getJavobVaqti());
+        mahsulot.setNarxi(dto.getNarxi());
+        mahsulot.setCategoriya(byId.get());
+        mahsulotRepository.save(mahsulot);
+        return new ApiResponse("Ma'lumotlar saqlandi", true);
+    }
+
+    public ApiResponse getMonitor() {
+        String S="";
+        for (Mahsulot mahsulot : mahsulotRepository.findAll()) {
+            if (mahsulot.getCategoriya().getNomi().equals("Monitor")){
+                S+="Categoiya: "+mahsulot.getCategoriya().getNomi()+"\n"+
+                        "Narxi: "+mahsulot.getNarxi()+"\n"+
+                        "Id: "+mahsulot.getId()+"\n"+
+                        "Brend: "+mahsulot.getBrend().toString()+"\n"+
+                        "Ekran dioganali: "+mahsulot.getEkranDioganal().toString()+"\n"+
+                        "Ekran o'lchami: "+mahsulot.getEkranOlcham().toString()+"\n"+
+                        "Video ulagich: "+mahsulot.getVideoUlagich().toString()+"\n"+
+                        "Matritsa: "+mahsulot.getMatritsa().toString()+"\n"+
+                        "Ekran qayrilish: "+mahsulot.getEkranQayrilish()+"\n"+
+                        "Ekran chastotasi: "+mahsulot.getEkranChastotasi().toString()+"\n"+
+                        "Javob vaqti: "+mahsulot.getJavobVaqti().toString()+"\n\n";
+            }
+        }
+        return new ApiResponse(S, true);
+    }
+
+    public ApiResponse getIdMonitor(Integer id) {
+        String S="";
+        for (Mahsulot mahsulot : mahsulotRepository.findAll()) {
+            if (mahsulot.getId().equals(id)){
+                if (mahsulot.getCategoriya().getNomi().equals("Monitor")){
+                    S+="Categoiya: "+mahsulot.getCategoriya().getNomi()+"\n"+
+                            "Narxi: "+mahsulot.getNarxi()+"\n"+
+                            "Id: "+mahsulot.getId()+"\n"+
+                            "Brend: "+mahsulot.getBrend().toString()+"\n"+
+                            "Ekran dioganali: "+mahsulot.getEkranDioganal().toString()+"\n"+
+                            "Ekran o'lchami: "+mahsulot.getEkranOlcham().toString()+"\n"+
+                            "Video ulagich: "+mahsulot.getVideoUlagich().toString()+"\n"+
+                            "Matritsa: "+mahsulot.getMatritsa().toString()+"\n"+
+                            "Ekran qayrilish: "+mahsulot.getEkranQayrilish()+"\n"+
+                            "Ekran chastotasi: "+mahsulot.getEkranChastotasi().toString()+"\n"+
+                            "Javob vaqti: "+mahsulot.getJavobVaqti().toString()+"\n";
+                }else {
+                    return new ApiResponse("Bunday idida Monitor ma'lumotlari mavjud emas", false);
+                }
+                return new ApiResponse(S, true);
+            }
+        }
+        return new ApiResponse("Bunday idida ma'lumot mavjud emas", false);
+    }
+
+    public ApiResponse deleteMonitor(Integer id) {
+        Optional<Mahsulot> byId = mahsulotRepository.findById(id);
+        if (!byId.isPresent()){
+            return new ApiResponse("Bazada bunday idli ma'lumot mavjud emas", false);
+        }
+        mahsulotRepository.deleteById(id);
+        return new ApiResponse("Ma'lumotlar o'chirildi", true);
+    }
+
+    public ApiResponse editMonitor(Integer id, MonitorDto dto) {
+        Optional<Mahsulot> byId = mahsulotRepository.findById(id);
+        if (!byId.isPresent()){
+            return new ApiResponse("Bazda bunday idli ma'lumot topilmadi", false);
+        }
+        Optional<Categoriya> byId1 = categoriyaRepository.findById(dto.getCategoriyaId());
+        if (!byId1.isPresent()){
+            return new ApiResponse("Bazda bunday idli categoriya mavjud emas!", false);
+        }
+        if (!byId.get().getCategoriya().getNomi().equals("Monitor")){
+            return new ApiResponse("Bunday idida Monitor ma'lumoti mavjud emas!", false);
+        }
+        Mahsulot mahsulot=byId.get();
+        mahsulot.setBrend(dto.getBrend());
+        mahsulot.setEkranDioganal(dto.getEkranDioganal());
+        mahsulot.setEkranOlcham(dto.getEkranOlcham());
+        mahsulot.setVideoUlagich(dto.getVideoUlagich());
+        mahsulot.setMatritsa(dto.getMatritsa());
+        mahsulot.setEkranQayrilish(dto.getEkranQayrilish());
+        mahsulot.setEkranChastotasi(dto.getEkranChastotasi());
+        mahsulot.setJavobVaqti(dto.getJavobVaqti());
+        mahsulot.setNarxi(dto.getNarxi());
+        mahsulot.setCategoriya(byId1.get());
+        mahsulotRepository.save(mahsulot);
+        return new ApiResponse("Ma'lumotlar tahrirlandi", true);
+    }
 }

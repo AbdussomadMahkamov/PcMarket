@@ -107,7 +107,7 @@ public class MahsulotController {
         ApiResponse apiResponse=mahsulotService.editOfisKomp(id, dto);
         return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
     }
-//    Ofis kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
+//    Monoblock kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
     @PreAuthorize(value = "hasAuthority('ADD')")
     @PostMapping("/addMonoblock")
     public HttpEntity<?> AddMonoblock(@RequestBody MonoblockDto dto){
@@ -136,6 +136,37 @@ public class MahsulotController {
     @PutMapping("/editMonoblock/{id}")
     public HttpEntity<?> EditMonoblock(@PathVariable Integer id, @RequestBody MonoblockDto dto){
         ApiResponse apiResponse=mahsulotService.editMonoblock(id, dto);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+//    Monitor kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
+    @PreAuthorize(value = "hasAuthority('ADD')")
+    @PostMapping("/addMonitor")
+    public HttpEntity<?> AddMonitor(@RequestBody MonitorDto dto){
+        ApiResponse apiResponse=mahsulotService.addMonitor(dto);
+        return ResponseEntity.status(apiResponse.isHolat()? HttpStatus.OK:HttpStatus.ALREADY_REPORTED).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('READ')")
+    @GetMapping("/getMonitor")
+    public HttpEntity<?> GetMonitor(){
+        ApiResponse apiResponse=mahsulotService.getMonitor();
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('IDREAD')")
+    @GetMapping("/getIdMonitor/{id}")
+    public HttpEntity<?> GetIdMonitor(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.getIdMonitor(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('DELETE')")
+    @DeleteMapping("/deleteMonitor/{id}")
+    public HttpEntity<?> DeleteMonitor(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.deleteMonitor(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('PUT')")
+    @PutMapping("/editMonitor/{id}")
+    public HttpEntity<?> EditMonitor(@PathVariable Integer id, @RequestBody MonitorDto dto){
+        ApiResponse apiResponse=mahsulotService.editMonitor(id, dto);
         return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
     }
 }
