@@ -3,29 +3,25 @@ package com.example.pcmarket.payload;
 import lombok.Data;
 
 @Data
-public class OyinKompDto {
+public class OfisKompDto {
     private String matPlata;
     private String sovutishTizimi;
-    private String videokarta;
     private String protsessor;
     private String ram;
-    private String qattiqDisk;
     private String quvvatManbai;
     private String ssd;
     private String keys;
     private String sistema;
     private double narxi;
     private Integer categoriyaId;
-//    "matPlata": "ASUS Z578A",
-//    "sovutishTizimi": "U7UUY",
-//    "videokarta": "GTX 3040 4gb",
-//    "protsessor": "Intel i5 9475",
+//    "matPlata": "ASUS 7478S",
+//    "sovutishTizimi": "ASUS ZW777",
+//    "protsessor": "Intel i5 1275",
 //    "ram": "8gb",
-//    "qattiqDisk": "500gb",
 //    "quvvatManbai": "Asus z544",
-//    "ssd": "256gb SSD",
+//    "ssd": "500gb SSD",
 //    "keys": "ASUS M756",
 //    "sistema": "Windows 10",
-//    "narxi": 456,
-//    "categoriyaId": 1
+//    "narxi": 756,
+//    "categoriyaId": 3
 }

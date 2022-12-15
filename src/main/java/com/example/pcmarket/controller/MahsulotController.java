@@ -2,6 +2,7 @@ package com.example.pcmarket.controller;
 
 import com.example.pcmarket.payload.ApiResponse;
 import com.example.pcmarket.payload.NotebookDto;
+import com.example.pcmarket.payload.OfisKompDto;
 import com.example.pcmarket.payload.OyinKompDto;
 import com.example.pcmarket.service.MahsulotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class MahsulotController {
     }
 //    Oyin kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
     @PreAuthorize(value = "hasAuthority('ADD')")
-    @PostMapping("/editOyinKomp")
+    @PostMapping("/addOyinKomp")
     public HttpEntity<?> PostOyinKomp(@RequestBody OyinKompDto dto){
         ApiResponse apiResponse=mahsulotService.addOyinKomp(dto);
         return ResponseEntity.status(apiResponse.isHolat()? HttpStatus.OK:HttpStatus.ALREADY_REPORTED).body(apiResponse.getXabar());
@@ -72,9 +73,41 @@ public class MahsulotController {
         ApiResponse apiResponse=mahsulotService.deleteOyinKomp(id);
         return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
     }
+    @PreAuthorize(value = "hasAuthority('PUT')")
     @PutMapping("/editOyinKomp/{id}")
     public HttpEntity<?> EditOyinKomp(@PathVariable Integer id, @RequestBody OyinKompDto dto){
         ApiResponse apiResponse=mahsulotService.editOyinKomp(id, dto);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    //    Ofis kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
+    @PreAuthorize(value = "hasAuthority('ADD')")
+    @PostMapping("/addOfisKomp")
+    public HttpEntity<?> AddOfisKomp(@RequestBody OfisKompDto dto){
+        ApiResponse apiResponse=mahsulotService.addOfisKomp(dto);
+        return ResponseEntity.status(apiResponse.isHolat()? HttpStatus.OK:HttpStatus.ALREADY_REPORTED).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('READ')")
+    @GetMapping("/getOfisKomp")
+    public HttpEntity<?> GetOfisKomp(){
+        ApiResponse apiResponse=mahsulotService.getOfisKomp();
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('IDREAD')")
+    @GetMapping("/getIdOfisKomp/{id}")
+    public HttpEntity<?> GetIdOfisKomp(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.getIdOfisKomp(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('DELETE')")
+    @DeleteMapping("/deleteOfisKomp/{id}")
+    public HttpEntity<?> DeleteOfisKomp(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.deleteOfisKomp(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('PUT')")
+    @PutMapping("/editOfisKomp/{id}")
+    public HttpEntity<?> EditOfisKomp(@PathVariable Integer id, @RequestBody OfisKompDto dto){
+        ApiResponse apiResponse=mahsulotService.editOfisKomp(id, dto);
         return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
     }
 }
