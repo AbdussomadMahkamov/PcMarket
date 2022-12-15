@@ -1,9 +1,6 @@
 package com.example.pcmarket.controller;
 
-import com.example.pcmarket.payload.ApiResponse;
-import com.example.pcmarket.payload.NotebookDto;
-import com.example.pcmarket.payload.OfisKompDto;
-import com.example.pcmarket.payload.OyinKompDto;
+import com.example.pcmarket.payload.*;
 import com.example.pcmarket.service.MahsulotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -108,6 +105,37 @@ public class MahsulotController {
     @PutMapping("/editOfisKomp/{id}")
     public HttpEntity<?> EditOfisKomp(@PathVariable Integer id, @RequestBody OfisKompDto dto){
         ApiResponse apiResponse=mahsulotService.editOfisKomp(id, dto);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+//    Ofis kompyuterini qoshish, oqish, idlab oqish, tahrirlash, ochirish
+    @PreAuthorize(value = "hasAuthority('ADD')")
+    @PostMapping("/addMonoblock")
+    public HttpEntity<?> AddMonoblock(@RequestBody MonoblockDto dto){
+        ApiResponse apiResponse=mahsulotService.addMonoblock(dto);
+        return ResponseEntity.status(apiResponse.isHolat()? HttpStatus.OK:HttpStatus.ALREADY_REPORTED).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('READ')")
+    @GetMapping("/getMonoblock")
+    public HttpEntity<?> GetMonoblock(){
+        ApiResponse apiResponse=mahsulotService.getMonoblock();
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('IDREAD')")
+    @GetMapping("/getIdMonoblock/{id}")
+    public HttpEntity<?> GetIdMonoblock(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.getIdMonoblock(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('DELETE')")
+    @DeleteMapping("/deleteMonoblock/{id}")
+    public HttpEntity<?> DeleteMonoblock(@PathVariable Integer id){
+        ApiResponse apiResponse=mahsulotService.deleteMonoblock(id);
+        return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
+    }
+    @PreAuthorize(value = "hasAuthority('PUT')")
+    @PutMapping("/editMonoblock/{id}")
+    public HttpEntity<?> EditMonoblock(@PathVariable Integer id, @RequestBody MonoblockDto dto){
+        ApiResponse apiResponse=mahsulotService.editMonoblock(id, dto);
         return ResponseEntity.status(apiResponse.isHolat()?HttpStatus.OK:HttpStatus.NOT_FOUND).body(apiResponse.getXabar());
     }
 }
